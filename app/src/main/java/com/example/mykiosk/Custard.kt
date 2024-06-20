@@ -7,60 +7,40 @@ fun displayCustardMenu() {
     var selectCustard = 0
 
     println("[ Forzen Custard MENU ]")
-    var shake = Shake().display()
-    var week = Week().display()
-    var redBean = RedBean().display()
-    var floats = Floats().display()
+    val custards = listOf(
+        Shake("Shakes", 5.9, "바닐라, 초콜렛, 솔티드 카라멜, 블랙&화이트, 스트로베리"),
+        Week("Shake of the Week", 6.5, "특별한 커스터드 플레이버"),
+        RedBean("Red Bean Shake", 6.5, "신선한 커스터드와 함께 우유와 레드빈이 블렌딩된 시즈널 쉐이크"),
+        Floats("Float", 5.9, "루트 비어, 퍼플 카우, 크림시클")
+    )
+    custards.forEachIndexed { index, custard -> custard.display(index + 1) }
+
     println(" 0. 뒤로가기              | 뒤로가기")
     selectCustard = readLine()!!.toInt()
 
-    when (selectCustard) {
-        1 -> println("${Shake().name}가 선택되었습니다. ")
-        2 -> println("${Week().name}가 선택되었습니다. ")
-        3 -> println("${RedBean().name}가 선택되었습니다. ")
-        4 -> println("${Floats().name}가 선택되었습니다. ")
-        0 -> {
-            main()
-        }
+    if (selectCustard in 1..custards.size) {
+        println("${custards[selectCustard - 1].name}이(가) 선택되었습니다.")
     }
 }
 
-open class Custard() {
-    open fun display() {
-        println("")
+open class Custard(val name: String, val price: Double, val description: String) {
+    open fun display(num: Int) {
+        println("$num.$name  | W $price | $description")
     }
 }
 
-class Shake() : Custard() {
-    val name = "Shakes"
-    val price = 5.9
-    override fun display() {
-        println(" 1. ${name}              | W ${price} | 바닐라, 초콜렛, 솔티드 카라멜, 블랙&화이트, 스트로베리")
-    }
+class Shake(name: String, price: Double, description: String) : Custard(name, price, description) {
 }
 
-class Week() : Custard() {
-    val name = "Shake of the Week"
-    val price = 6.5
-    override fun display() {
-        println(" 2. ${name}   | W ${price} | 특별한 커스터드 플레이버")
-    }
+class Week(name: String, price: Double, description: String) : Custard(name, price, description) {
 }
 
-class RedBean() : Custard() {
-    val name = "Red Bean Shake"
-    val price = 6.5
-    override fun display() {
-        println(" 3. ${name}      | W ${price} | 신선한 커스터드와 함께 우유와 레드빈이 블렌딩된 시즈널 쉐이크")
-    }
+class RedBean(name: String, price: Double, description: String) :
+    Custard(name, price, description) {
 }
 
-class Floats() : Custard() {
-    val name = "Floats"
-    val price = 5.9
-    override fun display() {
-        println(" 4. ${name}              | W ${price} | 루트 비어, 퍼플 카우, 크림시클")
-    }
+class Floats(name: String, price: Double, description: String) : Custard(name, price, description) {
 }
+
 
 
